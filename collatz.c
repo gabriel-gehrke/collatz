@@ -40,6 +40,10 @@ int main(int args_len, char** args)
 			collatz_print(start);
 			return 0;
 		}
+		else
+		{
+			return 1;
+		}
 	}
 
 	// extremum seeking mode (threads)
