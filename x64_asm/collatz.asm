@@ -13,15 +13,18 @@ global main
 main:
     mov rbp, rsp; for correct debugging
 
-    ; get input
+    ; get input with scanf, let scanf write value to stack (by passing rsp)
     xor eax, eax
     push rax ; make room on stack
     mov rdi, infmt
     mov rsi, rsp ; store value on stack
     call scanf
-    pop r12 ; load from stack
     
-    cmp r12, 1
+    pop r12 ; load scanned value from stack
+    and r12, r12
+    jz exit ; exit if loaded value was zero
+    
+    cmp r12, 1 ; exit if loaded value was one
     je exit
     
 loop:
