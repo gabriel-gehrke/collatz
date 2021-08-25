@@ -14,7 +14,7 @@ main:
     mov rbp, rsp; for correct debugging
 
     ; get input with scanf, let scanf write value to stack (by passing rsp)
-    xor eax, eax
+    xor eax, eax ; clear eax
     push rax ; make room on stack
     mov rdi, infmt
     mov rsi, rsp ; store value on stack
@@ -33,14 +33,14 @@ loop:
     and rax, 1  
     jnz odd ; handle odd number
     
-    sar r12, 1 ; handle even number (div by 2)
+    shr r12, 1 ; handle even number (div by 2)
     jmp print
     
 odd:
     ; calc r12 = 3*r12 + 1
     mov rax, r12 ; copy r12
     mov rbx, r12 ; copy r12
-    sal rbx, 1 ; = r12*2
+    shl rbx, 1 ; = r12*2
     add rax, rbx ; = r12 + 2*r12 = 3*r12
     inc rax
     
