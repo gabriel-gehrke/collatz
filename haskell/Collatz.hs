@@ -1,5 +1,4 @@
-module Collatz
-where
+module Collatz where
 
 -- calculates a single step in the collatz sequence
 collatz_step :: Integer -> Integer
@@ -18,18 +17,24 @@ collatz_bruteforce v m | v < 1        = error "invalid start value. must be >= 1
                        | v > m        = error "start value can't be bigger than maximum start value."
                        | v == m       = (v, len (collatz v), v, list_max (collatz v))
                        | v < m        = (maxlen_sv, maxlen, maxheight_sv, maxheight)
-                                         where
+                                          where
                                             (nextlen_sv, nextlen, nextmax_sv, nextmax) = collatz_bruteforce (v+1) m
-                                            _seq = collatz v
-                                            _height = list_max _seq
-                                            _length = len _seq
+                                            _height = list_max (collatz v)
+                                            _length = len (collatz v)
                                             maxlen = max (_length) (nextlen)
                                             maxheight = max (_height) (nextmax)
                                             maxlen_sv = if _length > nextlen then v else nextlen_sv
                                             maxheight_sv = if _height > nextmax then v else nextmax_sv
 
-
-
+collatz_bruteforce_res_max :: (Integer, Integer, Integer, Integer) -> (Integer, Integer, Integer, Integer) -> (Integer, Integer, Integer, Integer)
+collatz_bruteforce_res_max (len1sv, len1, max1sv, max1) (len2sv, len2, max2sv, max2) =
+   (
+      if len1 >= len2 then len1sv else len2sv, 
+      max len1 len2,
+      if max1 >= len1 then max1sv else max2sv,
+      max max1 max2
+   )
+                        
 
 -- calculates the maximum value in the list
 list_max :: Ord a => [a] -> a
