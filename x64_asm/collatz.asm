@@ -15,17 +15,15 @@ main:
 
     ; get input with scanf, let scanf write value to stack (by passing rsp)
     xor eax, eax ; clear eax
-    push rax ; make room on stack
+    push rax ; make room on stack (0)
     mov rdi, infmt
     mov rsi, rsp ; store value on stack
     call scanf
     
     pop r12 ; load scanned value from stack
-    and r12, r12
-    jz exit ; exit if loaded value was zero
     
-    cmp r12, 1 ; exit if loaded value was one
-    je exit
+    cmp r12, 1 ; exit if loaded value was "below or equal" one (unsigned)
+    jbe exit
     
 loop:
     mov rax, r12 ; copy current value
@@ -40,7 +38,7 @@ odd:
     ; calc r12 = 3*r12 + 1
     mov rax, r12 ; copy r12
     mov rbx, r12 ; copy r12
-    shl rbx, 1 ; = r12*2
+    shl rax, 1 ; = r12*2
     add rax, rbx ; = r12 + 2*r12 = 3*r12
     inc rax
     
